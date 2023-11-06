@@ -47,6 +47,21 @@
                     <span class="font-bold mr-3">{{ $comment->user->name }}</span>{{--  コメントしたユーザー名を表示する  --}}
                     <span class="text-sm">{{ $comment->created_at }}</span>{{--  コメントした日時を表示する  --}}
                     <p class="break-all">{!! nl2br(e($comment->body)) !!}</p>{{--  コメントを表示する。改行を反映させるためにnl2brを使用する  --}}
+                    {{-- コメントの編集・削除ボタンを表示する  --}}
+                    <div class="flex justify-end text-center">
+                        @can('update', $comment){{-- ポリシーのupdateメソッドを呼び出す --}}
+                            <a href="{{ route('posts.comments.edit', [$post, $comment]) }}"{{-- コメントの編集画面へのリンク --}}
+                                class="text-sm bg-green-400 hover:bg-green-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
+                        @endcan
+                        @can('delete', $comment){{-- ポリシーのdeleteメソッドを呼び出す --}}
+                            <form action="{{ route('posts.comments.destroy', [$post, $comment]) }}" method="post">{{--  コメントの削除フォーム  --}}
+                                @csrf
+                                @method('DELETE'){{-- DELETEメソッドを指定する  --}}
+                                <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"{{-- 削除ボタン  --}}
+                                    class="text-sm bg-red-400 hover:bg-red-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline w-20">
+                            </form>
+                        @endcan
+                    </div>
                 </div>
                 <hr>
             @endforeach
