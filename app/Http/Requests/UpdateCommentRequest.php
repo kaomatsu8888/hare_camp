@@ -4,15 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePostRequest extends FormRequest
+class UpdateCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        // 今回は使用しないのでtrueを返す
-        return true;
+        return false;
     }
 
     /**
@@ -22,15 +21,8 @@ class UpdatePostRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rule = [
-        'title' => 'required|string|max:50',
-        'body' => 'required|string|max:2000',
+        return [
+            //
         ];
-
-        // 画像が送信されてきた場合のみ、バリデーションを追加
-        if ($this->file('image')) {
-            $rule['image'] = 'required|file|image|mimes:jpg,png';
-        }
-        return $rule;
     }
 }

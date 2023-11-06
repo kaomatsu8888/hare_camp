@@ -82,5 +82,8 @@
     "Event Name": "タイトル",
     "Description": "詳細",
     "Log In": "ログイン",
-    "Create Post": "新規登録"
+    "Create Post": "記事作成",
+    "pagination": ":total件中、:from〜:to件表示"
+    
+
 }
