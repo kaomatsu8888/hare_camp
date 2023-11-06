@@ -27,7 +27,7 @@
             @can('update', $post)<!-- ポリシーのupdateメソッドを呼び出す -->
                 <a href="{{ route('posts.edit', $post) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
             @endcan
-            @can('delete', $post)
+            @can('delete', $post){{-- ポリシーのdeleteメソッドを呼び出す --}}
                 <form action="{{ route('posts.destroy', $post) }}" method="post">
                     @csrf
                     @method('DELETE')
@@ -35,5 +35,14 @@
                 </form>
             @endcan
         </div>
+        @auth{{-- ログインしている場合のみ表示 --}}
+            <hr class="my-4">
+            <div class="flex justify-end">
+                <a href="{{ route('posts.comments.create', $post) }}" class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">コメント登録</a>
+            </div>
+        @endauth
+
+
+
     </div>
 </x-app-layout>

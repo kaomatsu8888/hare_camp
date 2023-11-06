@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\CommentController;//CommentControllerを追加
 use App\Http\Controllers\PostController;//PostControllerを追加
 use App\Http\Controllers\ProfileController;//ProfileControllerを追加
 use Illuminate\Support\Facades\Route;//Routeを追加
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +24,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () {//authミドルウェアをグループ化
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -32,7 +34,11 @@ Route::resource('posts', PostController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
 
-Route::resource('posts', PostController::class)
+Route::resource('posts', PostController::class)//PostControllerに対してのルーティングを追加
     ->only(['show', 'index']);
+
+Route::resource('posts.comments', CommentController::class)//posts.commentsに対してのルーティングを追加
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])//必要なルーティングのみに絞る
+    ->middleware('auth');//ミドルウェアを追加
 
 require __DIR__.'/auth.php';
