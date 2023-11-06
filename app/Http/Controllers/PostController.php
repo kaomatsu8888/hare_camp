@@ -67,11 +67,12 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id)//記事の詳細を表示する
     {
-        $post = Post::find($id);
+        $post = Post::with(['user'])->find($id);//記事を取得するように変更。with('user')を追加
+        $comments = $post->comments()->latest()->get()->load(['user']);//コメントを新しい順に取得するように変更。with('user')を追加
 
-        return view('posts.show', compact('post'));
+        return view('posts.show', compact('post', 'comments'));//取得した記事とコメントをビューに渡す
     }
 
     /**

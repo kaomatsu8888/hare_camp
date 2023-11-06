@@ -41,6 +41,16 @@
                 <a href="{{ route('posts.comments.create', $post) }}" class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">コメント登録</a>
             </div>
         @endauth
+        <section class="font-sans break-normal text-gray-900 ">
+            @foreach ($comments as $comment){{--  コメントを表示する  --}}
+                <div class="my-2">
+                    <span class="font-bold mr-3">{{ $comment->user->name }}</span>{{--  コメントしたユーザー名を表示する  --}}
+                    <span class="text-sm">{{ $comment->created_at }}</span>{{--  コメントした日時を表示する  --}}
+                    <p class="break-all">{!! nl2br(e($comment->body)) !!}</p>{{--  コメントを表示する。改行を反映させるためにnl2brを使用する  --}}
+                </div>
+                <hr>
+            @endforeach
+        </section>
 
 
 
