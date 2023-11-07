@@ -4,6 +4,9 @@ use App\Http\Controllers\CommentController;//CommentControllerを追加
 use App\Http\Controllers\PostController;//PostControllerを追加
 use App\Http\Controllers\ProfileController;//ProfileControllerを追加
 use Illuminate\Support\Facades\Route;//Routeを追加
+use App\Http\Controllers\CampgroundController;//CampgroundControllerを追加
+use App\Http\Controllers\ReservationController;//ReservationControllerを追加
+
 
 
 /*
@@ -40,5 +43,14 @@ Route::resource('posts', PostController::class)//PostControllerに対しての�
 Route::resource('posts.comments', CommentController::class)//posts.commentsに対してのルーティングを追加
     ->only(['create', 'store', 'edit', 'update', 'destroy'])//必要なルーティングのみに絞る
     ->middleware('auth');//ミドルウェアを追加
+
+// キャンプ場の一覧
+Route::get('/campgrounds', [CampgroundController::class, 'index'])->name('campgrounds.index');
+
+Route::resource('reservations', ReservationController::class)->middleware('auth');//認証ミドルウェアを追加
+// キャンプ場の詳細
+Route::get('/campgrounds/{campground}', [CampgroundController::class, 'show'])->name('campgrounds.show');//CampgroundControllerのshowメソッドを呼び出す
+
+
 
 require __DIR__.'/auth.php';
