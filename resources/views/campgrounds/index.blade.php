@@ -10,6 +10,7 @@
                             <a href="{{ route('campgrounds.show', $campground) }}" class="text-blue-500 hover:underline">
                                 {{ $campground->name }}
                             </a>
+                            <p>価格: ¥{{ number_format($campground->price) }}</p>
                         </li>
                     @endforeach
                 </ul>

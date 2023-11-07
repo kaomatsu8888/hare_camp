@@ -22,5 +22,13 @@
             <a href="{{ route('reservations.create', $campground) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">このキャンプ場を予約する</a>
         </div>
 
+        {{-- ...その他のキャンプ場の詳細情報... --}}
+        <p>価格: ¥{{ number_format($campground->price) }}</p>
+        {{-- ...その他のコンテンツ... --}}
+
+        @if ($campground->image)
+        <img src="{{ asset('storage/' . $campground->image) }}" alt="キャンプ場の画像">
+        @endif
+
     </div>
 </x-app-layout>

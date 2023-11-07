@@ -32,6 +32,23 @@ class CampgroundController extends Controller
     // {
     //     return view('campgrounds.show', compact('campground'));
     // }
+public function update(Request $request, Campground $campground)
+{
+    $data = $request->validate([
+        // ...他のバリデーションルール...
+        'image' => 'sometimes|image|max:5000', // 画像ファイルであること、最大5MB
+    ]);
+
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('campground_images', 'public');
+        $data['image'] = $imagePath;
+    }
+
+    $campground->update($data);
+
+    return redirect()->route('campgrounds.show', $campground);
+}
+
 
 
 }
