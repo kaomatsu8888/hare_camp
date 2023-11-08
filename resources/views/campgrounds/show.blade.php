@@ -11,7 +11,12 @@
             <p class="text-sm mb-2 md:text-base font-normal text-gray-600">
                 {{ $campground->location }}
             </p>
-            <img src="{{ $campground->image_url }}" alt="" class="mb-4">
+            {{-- <img src="{{ $campground->image_url }}" alt="" class="mb-4"> --}}
+            
+            {{-- キャンプ場の画像を表示 --}}
+            @if ($campground->image)
+            <img src="{{ asset('images/' . $campground->image) }}" alt="{{ $campground->name }}の画像" class="w-full h-auto">
+            @endif
 
             {{-- キャンプ場の説明 --}}
             <p class="text-gray-700 text-base">{!! nl2br(e($campground->description)) !!}</p>
@@ -27,9 +32,6 @@
         <p>価格: ¥{{ number_format($campground->price) }}</p>
         {{-- ...その他のコンテンツ... --}}
 
-        @if ($campground->image)
-        <img src="{{ asset('storage/' . $campground->image) }}" alt="キャンプ場の画像">
-        @endif
 
     </div>
 </x-app-layout>

@@ -20,8 +20,7 @@ use App\Http\Controllers\ReservationController; //ReservationControllerを追加
 |
 */
 Route::resource('reservations', ReservationController::class)->middleware('auth'); //認証ミドルウェアを追加
-Route::get('/', [PostController::class, 'index']) //PostControllerのindexメソッドを呼び出すように変更
-    ->name('root'); //名前付きルーティングを追加
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -60,6 +59,12 @@ Route::get('/campgrounds/{campground}', [CampgroundController::class, 'show'])
 Route::get('/campgrounds/{campground}/reserve', [ReservationController::class, 'create'])
     ->name('reservations.create');
 
+Route::get('/', [PostController::class, 'index']) //PostControllerのindexメソッドを呼び出すように変更
+    ->name('root'); //名前付きルーティングを追加
+
+//予約データを処理するためのPOSTルートを設定します。
+Route::post('/reservations', [ReservationController::class, 'store'])
+    ->name('reservations.store');
 
 
 require __DIR__ . '/auth.php';

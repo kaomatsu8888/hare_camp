@@ -35,19 +35,22 @@ public function create($campground_id)
      */
 public function store(Request $request)
 {
-    $request->validate([
+    // バリデーションルール
+    $validatedData = $request->validate([
         'campground_id' => 'required|exists:campgrounds,id',
         'start_date' => 'required|date',
         'end_date' => 'required|date|after:start_date',
+        // 他に必要なフィールドがあれば追加
     ]);
     
-    $reservation = new Reservation($request->all());
-    $reservation->user_id = auth()->id(); // 現在認証されているユーザーID
+    // 予約データの保存
+    $reservation = new Reservation($validatedData);
+    $reservation->user_id = auth()->id(); // 予約ユーザーのID
     $reservation->save();
-
-    return redirect()->route('reservations.index')->with('success', 'Reservation has been made.');
+    
+ // 保存後のリダイレクト
+    return redirect()->route('some.route.name')->with('success', '予約が完了しました！');
 }
-
     /**
      * Display the specified resource.
      */
