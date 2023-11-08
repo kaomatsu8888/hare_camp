@@ -20,8 +20,6 @@
         {{-- 予約ボタンを表示 --}}
         <div class="flex flex-row text-center my-4">
             <a href="{{ route('reservations.create', $campground) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">このキャンプ場を予約する</a>
-            <a href="{{ route('reservations.create', $campground->id) }}" class="btn btn-primary">
-    このキャンプ場を予約する
 </a>{{-- このキャンプ場を予約するボタンを表示する --}} 
         </div>
 

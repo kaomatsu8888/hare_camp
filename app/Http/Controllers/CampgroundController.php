@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Campground;
+use Illuminate\Support\Facades\Auth;//Authを使う場合は、必要。
 
 class CampgroundController extends Controller
 {
@@ -21,17 +23,7 @@ class CampgroundController extends Controller
         return view('campgrounds.show', compact('campground')); // 取得したキャンプ場をビューに渡す
     }
 
-    // その他のCRUD操作（create, store, edit, update, destroy）も同様に定義可能
-    // public function index()
-    // {
-    //     $campgrounds = Campground::all();
-    //     return view('campgrounds.index', compact('campgrounds'));
-    // }
-
-    // public function show(Campground $campground)
-    // {
-    //     return view('campgrounds.show', compact('campground'));
-    // }
+// キャンプ場の新規登録フォームを表示する
 public function update(Request $request, Campground $campground)
 {
     $data = $request->validate([
