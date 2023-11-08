@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Reservation;
+use App\Models\Campground; 
 use Illuminate\Support\Facades\Auth;//必要か不明
 
 class ReservationController extends Controller
@@ -20,10 +21,14 @@ class ReservationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+public function create($campground_id)
+{
+    // キャンプ場のモデルを見つける
+    $campground = Campground::findOrFail($campground_id);
+
+    // 予約フォームビューにキャンプ場の情報を渡す
+    return view('reservations.create', compact('campground'));
+}
 
     /**
      * Store a newly created resource in storage.

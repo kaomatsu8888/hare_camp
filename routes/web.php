@@ -19,7 +19,7 @@ use App\Http\Controllers\ReservationController; //ReservationControllerを追加
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::resource('reservations', ReservationController::class)->middleware('auth'); //認証ミドルウェアを追加
 Route::get('/', [PostController::class, 'index']) //PostControllerのindexメソッドを呼び出すように変更
     ->name('root'); //名前付きルーティングを追加
 
@@ -55,6 +55,11 @@ Route::resource('reservations', ReservationController::class)->middleware('auth'
 Route::get('/campgrounds/{campground}', [CampgroundController::class, 'show'])
     ->name('campgrounds.show')
     ->middleware('auth'); // この行を追加（詳細ページもログイン必須にする場合）
+
+// キャンプ場の予約フォームのルート
+Route::get('/campgrounds/{campground}/reserve', [ReservationController::class, 'create'])
+    ->name('reservations.create');
+
 
 
 require __DIR__ . '/auth.php';
