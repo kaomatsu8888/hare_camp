@@ -1,0 +1,9 @@
+/* public/css/styles.css */
+
+.background-image {
+    background-image: url('/images/hare_camp_image.png'); /* 画像のパスを設定 */
+    background-size: cover; /* 画像がコンテナ全体を覆うように設定 */
+    background-position: center; /* 画像がコンテナの中央に来るように設定 */
+    background-repeat: no-repeat; /* 画像が繰り返されないように設定 */
+    height: 100vh; /* ビューポートの高さに合わせる */
+}
