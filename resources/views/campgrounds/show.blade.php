@@ -15,7 +15,7 @@
             
             {{-- キャンプ場の画像を表示 --}}
             @if ($campground->image)
-            <img src="{{ asset('images/' . $campground->image) }}" alt="{{ $campground->name }}の画像" class="w-full h-auto">
+            <img src="{{ strpos($campground->image, 'images/') === 0 ? asset($campground->image) : asset('images/' . $campground->image) }}" alt="{{ $campground->name }}の画像" class="w-full h-auto">
             @endif
 
             {{-- キャンプ場の説明 --}}

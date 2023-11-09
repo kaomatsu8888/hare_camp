@@ -4,6 +4,26 @@
     background-image: url('/images/hare_camp_image.png'); /* 画像のパスを設定 */
     background-size: cover; /* 画像がコンテナ全体を覆うように設定 */
     background-position: center; /* 画像がコンテナの中央に来るように設定 */
-    background-repeat: no-repeat; /* 画像が繰り返されないように設定 */
+    /* background-repeat: no-repeat; 画像が繰り返されないように設定 */
     height: 100vh; /* ビューポートの高さに合わせる */
+}
+
+.campground-item {
+  display: block; /* カテゴリをブロック要素として扱う */
+  max-width: 100%; /* 最大幅を親要素の100%に設定 */
+  border-radius: 0.5rem; /* 角丸の設定 */
+  overflow: hidden; /* はみ出た画像は非表示にする */
+  margin-bottom: 1rem; /* 下マージンを設定 */
+}
+
+.campground-image {
+  width: 100%; /* 幅を100%に設定 */
+  height: 200px; /* 高さを固定値に設定 */
+  object-fit: cover; /* 画像をトリミングして要素に合わせる */
+}
+
+/* キャンプ場情報を表示するテキストコンテナ */
+.campground-info {
+  padding: 1rem; /* パディングを設定 */
+  background-color: white; /* 背景色を白に設定 */
 }
