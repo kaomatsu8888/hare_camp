@@ -6,8 +6,7 @@ use App\Http\Controllers\ProfileController; //ProfileControllerを追加
 use Illuminate\Support\Facades\Route; //Routeを追加
 use App\Http\Controllers\CampgroundController; //CampgroundControllerを追加
 use App\Http\Controllers\ReservationController; //ReservationControllerを追加
-
-
+use App\Http\Controllers\UserController; //UserControllerを追加
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +18,18 @@ use App\Http\Controllers\ReservationController; //ReservationControllerを追加
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::resource('reservations', ReservationController::class)->middleware('auth'); //認証ミドルウェアを追加
 
 
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return redirect('/mypage');
+})->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () { //authミドルウェアをグループ化
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -65,6 +70,13 @@ Route::get('/', [PostController::class, 'index']) //PostControllerのindexメソ
 //予約データを処理するためのPOSTルートを設定します。
 Route::post('/reservations', [ReservationController::class, 'store'])
     ->name('reservations.store');
+
+// 予約一覧ページのルート
+Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+
+
+// マイページのルート
+Route::get('/mypage', [UserController::class, 'mypage'])->middleware('auth')->name('mypage');
 
 
 require __DIR__ . '/auth.php';

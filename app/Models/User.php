@@ -52,4 +52,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);//hasManyメソッドを使って、コメントを取得するリレーションを定義
     }
+  // ユーザーと予約のリレーションを定義
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
 }

@@ -47,9 +47,9 @@ public function store(Request $request)
     $reservation = new Reservation($validatedData);
     $reservation->user_id = auth()->id(); // 予約ユーザーのID
     $reservation->save();
-    
- // 保存後のリダイレクト
-    return redirect()->route('some.route.name')->with('success', '予約が完了しました！');
+
+     // 予約が保存されたら、ユーザーをマイページ（または任意のページ）にリダイレクトします。
+        return redirect()->route('mypage')->with('success', '予約が完了しました。');
 }
     /**
      * Display the specified resource.

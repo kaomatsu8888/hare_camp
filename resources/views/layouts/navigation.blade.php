@@ -12,8 +12,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <!-- Existing Dashboard Link -->
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+
+                    <!-- Add New Campgrounds Link -->
+                    <x-nav-link :href="url('/campgrounds')" :active="request()->routeIs('campgrounds.index')">
+                        {{ __('キャンプ場一覧') }}
                     </x-nav-link>
                 </div>
             </div>

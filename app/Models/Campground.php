@@ -14,4 +14,5 @@ class Campground extends Model
         $campgrounds = Campground::all();
         return view('campgrounds.index', compact('campgrounds'));
     }
+
 }
