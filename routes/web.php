@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route; //Routeを追加
 use App\Http\Controllers\CampgroundController; //CampgroundControllerを追加
 use App\Http\Controllers\ReservationController; //ReservationControllerを追加
 use App\Http\Controllers\UserController; //UserControllerを追加
+use App\Http\Controllers\WeatherController; // WeatherControllerを使用
 
 /*
 |--------------------------------------------------------------------------
@@ -78,8 +79,10 @@ Route::get('/reservations', [ReservationController::class, 'index'])->name('rese
 // マイページのルート
 Route::get('/mypage', [UserController::class, 'mypage'])->middleware('auth')->name('mypage');
 
+// 晴れの日検索ページへのルート
+Route::get('/sunny-days', [WeatherController::class, 'searchSunnyDays'])->name('sunny-days');
 
-Route::get('/', [WeatherController::class, 'index']);
+Route::get('/sunny-days', [CampgroundController::class, 'sunnyDays'])->name('sunny-days.index');
 
 
 require __DIR__ . '/auth.php';

@@ -79,4 +79,30 @@ class CampgroundController extends Controller
 
         return redirect()->route('campgrounds.show', $campground);
     }
+
+    public function sunnyDays()
+    {
+        $apiKey = 'c649a76bc4431b260edb4b21a56a3068'; // OpenWeatherMap APIキー
+        $client = new Client();
+        $sunnyCampgrounds = [];
+
+        $campgrounds = Campground::all(); // すべてのキャンプ場を取得
+
+        foreach ($campgrounds as $campground) {
+            $cityName = $campground->location; // キャンプ場の場所（都市名）
+            $url = "http://api.openweathermap.org/data/2.5/weather?q={$cityName}&appid={$apiKey}";
+
+            $response = $client->request('GET', $url);
+            $data = json_decode($response->getBody(), true);
+
+            // 天気の状態をチェック（ここでは「Clear」が晴れと仮定）
+            if ($data['weather'][0]['main'] === 'Clear') {
+                // 晴れているキャンプ場だけを追加
+                $sunnyCampgrounds[] = $campground;
+            }
+        }
+
+        // 晴れの日のキャンプ場のみをビューに渡す
+        return view('weather.sunny_days', compact('sunnyCampgrounds'));
+    }
 }

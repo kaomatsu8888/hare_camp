@@ -21,8 +21,14 @@
                     <x-nav-link :href="url('/campgrounds')" :active="request()->routeIs('campgrounds.index')">
                         {{ __('キャンプ場一覧') }}
                     </x-nav-link>
+
+                    <!-- New Sunny Days Link -->
+                    <x-nav-link :href="route('sunny-days.index')" :active="request()->routeIs('sunny-days.index')">
+                    {{ __('☀の日検索') }}
+                    </x-nav-link>
                 </div>
             </div>
+
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">

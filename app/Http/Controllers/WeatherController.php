@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class WeatherContoroller extends Controller
+class WeatherController extends Controller
 {
-    //
 }
