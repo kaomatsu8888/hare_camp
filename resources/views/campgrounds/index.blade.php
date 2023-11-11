@@ -4,10 +4,12 @@
     <style>
         .image-fit {
             max-width: 100%; /* コンテナの幅に合わせる */
+            max-height: 200px; /* 画像の高さの最大値を設定 */
             height: auto; /* 画像の高さを自動調整 */
             object-fit: cover; /* 画像のアスペクト比を保持 */
         }
         .campground-container {
+            width: 300px; /* コンテナの固定横幅 */
             background: #fff; /* 背景色 */
             border-radius: 8px; /* 角丸 */
             overflow: hidden; /* コンテナ外のコンテンツを隠す */
@@ -38,6 +40,15 @@
                                     <p>コンビニまでの距離: {{ $campground->distance_to_convenience_store }} km</p>
                                     <p>温泉までの距離: {{ $campground->distance_to_onsen }} km</p>
                                 </div>
+                                {{-- 天気情報の表示 --}}
+                                @if (isset($campground->weather))
+                                    <div class="weather-info">
+                                        <p>天気: {{ $campground->weather->main }} ({{ $campground->weather->description }})</p>
+                                        <p>気温: {{ $campground->weather->temp }}°C</p>
+                                        <p>風速: {{ $campground->weather->wind_speed }} km/h</p>
+                                        <img src="http://openweathermap.org/img/wn/{{ $campground->weather->icon }}.png" alt="Weather Icon">
+                                    </div>
+                                @endif
                             </li>
                         @endforeach
                     </ul>

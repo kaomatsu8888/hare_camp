@@ -27,3 +27,9 @@
   padding: 1rem; /* パディングを設定 */
   background-color: white; /* 背景色を白に設定 */
 }
+
+.fixed-size-image {
+    width: 300px; /* 固定幅 */
+    height: 200px; /* 固定高さ */
+    object-fit: cover; /* 画像がコンテナ内に収まるよう調整 */
+}
