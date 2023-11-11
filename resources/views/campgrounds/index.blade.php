@@ -20,6 +20,7 @@
             transform: translateY(-5px); /* ホバー時に上に少し移動 */
         }
     </style>
+
     <div class="bg-campground">
         <div class="container mx-auto mt-8 opacity-75">
             <h1 class="text-xl mb-4 text-yellow">キャンプ場一覧</h1>
@@ -32,23 +33,18 @@
                                     {{ $campground->name }}
                                 </a>
                                 <p>価格: ¥{{ number_format($campground->price) }}</p>
-                                <!-- 新しい情報の表示 -->
                                 <div>
-                                <img src="{{ strpos($campground->image, 'images/') === 0 ? asset($campground->image) : asset('images/' . $campground->image) }}" alt="キャンプ場の画像" class="image-fit">
+                                    <img src="{{ strpos($campground->image, 'images/') === 0 ? asset($campground->image) : asset('images/' . $campground->image) }}" alt="キャンプ場の画像" class="image-fit">
                                     <p>ホームセンターまでの距離: {{ $campground->distance_to_home_center }} km</p>
                                     <p>スーパーまでの距離: {{ $campground->distance_to_supermarket }} km</p>
                                     <p>コンビニまでの距離: {{ $campground->distance_to_convenience_store }} km</p>
                                     <p>温泉までの距離: {{ $campground->distance_to_onsen }} km</p>
                                 </div>
-                                {{-- 天気情報の表示 --}}
-                                @if (isset($campground->weather))
-                                    <div class="weather-info">
-                                        <p>天気: {{ $campground->weather->main }} ({{ $campground->weather->description }})</p>
-                                        <p>気温: {{ $campground->weather->temp }}°C</p>
-                                        <p>風速: {{ $campground->weather->wind_speed }} km/h</p>
-                                        <img src="http://openweathermap.org/img/wn/{{ $campground->weather->icon }}.png" alt="Weather Icon">
-                                    </div>
-                                @endif
+                                <div class="weather-info">
+                                    <p>天気: {{ $campground->weather['main'] }} ({{ $campground->weather['description'] }})</p>
+                                    <p>気温: {{ $campground->weather['temp'] }}°C</p>
+                                    <img src="http://openweathermap.org/img/w/{{ $campground->weather['icon'] }}.png" alt="{{ $campground->weather['main'] }}">
+                                </div>
                             </li>
                         @endforeach
                     </ul>
@@ -57,8 +53,3 @@
         </div>
     </div>
 </x-app-layout>
-
-
-                                {{-- <div>
-                                    <img src="{{ asset($campground->image) }}" alt="キャンプ場の画像" class="w-full h-auto">
-                                    <p>ホームセンターまでの距離: {{ $campground->distance_to_home_center }} km</p> --}}

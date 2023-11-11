@@ -79,4 +79,7 @@ Route::get('/reservations', [ReservationController::class, 'index'])->name('rese
 Route::get('/mypage', [UserController::class, 'mypage'])->middleware('auth')->name('mypage');
 
 
+Route::get('/', [WeatherController::class, 'index']);
+
+
 require __DIR__ . '/auth.php';

@@ -29,6 +29,18 @@
 </a>{{-- このキャンプ場を予約するボタンを表示する --}} 
         </div>
 
+        {{-- 天気情報の表示 --}}
+        @if(isset($weather))
+            <div class="my-4 p-4 bg-blue-100 rounded">
+                <h3 class="font-bold">天気情報</h3>
+                <p>天気: {{ $weather['main'] }} ({{ $weather['description'] }})</p>
+                <p>現在の気温: {{ $weather['temp'] }}°C</p>
+                <p>最低気温: {{ $weather['temp_min'] }}°C</p>
+                <p>最高気温: {{ $weather['temp_max'] }}°C</p>
+            </div>
+        @endif
+
+
         {{-- ...その他のキャンプ場の詳細情報... --}}
         <p>価格: ¥{{ number_format($campground->price) }}</p>
         {{-- ...その他のコンテンツ... --}}

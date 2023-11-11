@@ -4,43 +4,79 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Campground;
-use Illuminate\Support\Facades\Auth;//Authを使う場合は、必要。
+use GuzzleHttp\Client; //Guzzleを使う場合は、必要。
+use Illuminate\Support\Facades\Auth; //Authを使う場合は、必要。
 
 class CampgroundController extends Controller
 {
-
     // キャンプ場一覧を表示する
     public function index()
     {
-        $campgrounds = Campground::latest()->paginate(10); // キャンプ場を新しい順に取得し、ページネーションを適用
+        $campgrounds = Campground::latest()->paginate(10);
+        $client = new Client();
+        $apiKey = 'c649a76bc4431b260edb4b21a56a3068'; // APIキーをセット
 
-        return view('campgrounds.index', compact('campgrounds')); // 取得したキャンプ場をビューに渡す
+        foreach ($campgrounds as $campground) {
+            $cityName = $campground->location; // キャンプ場の場所を取得
+            $url = "http://api.openweathermap.org/data/2.5/weather?q={$cityName}&units=metric&lang=ja&appid={$apiKey}";
+            $response = $client->request('GET', $url);
+            $data = json_decode($response->getBody(), true);
+
+            // 天気データをキャンプ場のデータに追加
+            $campground->weather = [
+                'main' => $data['weather'][0]['main'],
+                'description' => $data['weather'][0]['description'],
+                'icon' => $data['weather'][0]['icon'],
+                'temp' => $data['main']['temp'],
+                'temp_min' => $data['main']['temp_min'],
+                'temp_max' => $data['main']['temp_max']
+            ];
+        }
+
+        return view('campgrounds.index', compact('campgrounds'));
     }
 
-    // キャンプ場の詳細を表示する
+
+
+    // 天気情報のため改変中
     public function show(Campground $campground)
     {
-        return view('campgrounds.show', compact('campground')); // 取得したキャンプ場をビューに渡す
+        $cityName = $campground->location; // キャンプ場の場所
+        $apiKey = 'c649a76bc4431b260edb4b21a56a3068'; // APIキー
+        $url = "http://api.openweathermap.org/data/2.5/weather?units=metric&lang=ja&q=$cityName&appid=$apiKey";
+
+        $client = new Client();
+        $response = $client->request('GET', $url);
+        $weatherData = json_decode($response->getBody(), true);
+
+        // 必要な天気データを抽出
+        $weather = [
+            'main' => $weatherData['weather'][0]['main'],
+            'description' => $weatherData['weather'][0]['description'],
+            'temp' => $weatherData['main']['temp'],
+            'temp_min' => $weatherData['main']['temp_min'],
+            'temp_max' => $weatherData['main']['temp_max'],
+            // その他の必要なデータ...
+        ];
+
+        return view('campgrounds.show', compact('campground', 'weather'));
     }
 
-// キャンプ場の新規登録フォームを表示する
-public function update(Request $request, Campground $campground)
-{
-    $data = $request->validate([
-        // ...他のバリデーションルール...
-        'image' => 'sometimes|image|max:5000', // 画像ファイルであること、最大5MB
-    ]);
+    // キャンプ場の新規登録フォームを表示する
+    public function update(Request $request, Campground $campground)
+    {
+        $data = $request->validate([
+            // ...他のバリデーションルール...
+            'image' => 'sometimes|image|max:5000', // 画像ファイルであること、最大5MB
+        ]);
 
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('campground_images', 'public');
-        $data['image'] = $imagePath;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('campground_images', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        $campground->update($data);
+
+        return redirect()->route('campgrounds.show', $campground);
     }
-
-    $campground->update($data);
-
-    return redirect()->route('campgrounds.show', $campground);
-}
-
-
-
 }
