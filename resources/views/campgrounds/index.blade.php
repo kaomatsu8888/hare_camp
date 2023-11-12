@@ -28,11 +28,17 @@
             height: auto; /* 画像の高さを自動調整 */
             object-fit: cover; /* 画像のアスペクト比を保持 */
         }
+
+        .campground-title {
+            color: #FFFFFF; /* 白色に変更 */
+            font-weight: bold; /* 文字を太くする */
+}
+
     </style>
 
     <div class="bg-campground">
         <div class="container mx-auto mt-8 opacity-75">
-            <h1 class="text-xl mb-4 text-yellow">キャンプ場一覧</h1>
+            <h1 class="text-xl mb-4 text-yellow campground-title">キャンプ場一覧</h1>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 flex-container"> <!-- flex-container クラスを追加 -->
                     @foreach ($campgrounds as $campground)

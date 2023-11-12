@@ -14,7 +14,7 @@ class CampgroundController extends Controller
     {
         $campgrounds = Campground::latest()->paginate(10);
         $client = new Client();
-        $apiKey = 'c649a76bc4431b260edb4b21a56a3068'; // APIキーをセット
+        $apiKey = env('OPENWEATHERMAP_API_KEY'); // APIキーをセット
 
         foreach ($campgrounds as $campground) {
             $cityName = $campground->location; // キャンプ場の場所を取得
@@ -42,7 +42,7 @@ class CampgroundController extends Controller
     public function show(Campground $campground)
     {
         $cityName = $campground->location; // キャンプ場の場所
-        $apiKey = 'c649a76bc4431b260edb4b21a56a3068'; // APIキー
+        $apiKey = env('OPENWEATHERMAP_API_KEY'); // APIキー
         $url = "http://api.openweathermap.org/data/2.5/weather?units=metric&lang=ja&q=$cityName&appid=$apiKey";
 
         $client = new Client();
@@ -82,7 +82,7 @@ class CampgroundController extends Controller
 
     public function sunnyDays()
     {
-        $apiKey = 'c649a76bc4431b260edb4b21a56a3068'; // OpenWeatherMap APIキー
+        $apiKey = env('OPENWEATHERMAP_API_KEY'); // OpenWeatherMap APIキー
         $client = new Client();
         $sunnyCampgrounds = [];
 
